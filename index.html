@@ -6,15 +6,18 @@
     <title>ИИ Репетитор</title>
     <style>
       :root {
-        --bg: #f4f7ff;
+        --bg: #f3f6ff;
         --panel: #ffffff;
         --primary: #4f46e5;
         --primary-dark: #3730a3;
+        --secondary: #7c3aed;
         --accent: #22c55e;
+        --success-soft: #dcfce7;
+        --warning-soft: #fef3c7;
         --text: #1f2937;
         --muted: #6b7280;
-        --border: #dbe3f0;
-        --warning: #fef3c7;
+        --border: #dfe7f5;
+        --light: #f8fafc;
       }
 
       * { box-sizing: border-box; }
@@ -27,7 +30,7 @@
       }
 
       .container {
-        max-width: 1100px;
+        max-width: 1200px;
         margin: 0 auto;
         padding: 24px;
       }
@@ -35,27 +38,45 @@
       .hero {
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         color: white;
-        border-radius: 24px;
-        padding: 32px 24px;
-        box-shadow: 0 12px 30px rgba(79, 70, 229, 0.25);
+        border-radius: 28px;
+        padding: 32px 28px;
+        box-shadow: 0 14px 32px rgba(79, 70, 229, 0.25);
+      }
+
+      .hero-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
       }
 
       .hero h1 {
-        margin: 0 0 10px;
-        font-size: clamp(2rem, 4vw, 3rem);
+        margin: 0;
+        font-size: clamp(2.1rem, 4vw, 3.2rem);
+      }
+
+      .status {
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
       }
 
       .hero p {
         margin: 0;
-        max-width: 700px;
-        font-size: 1.05rem;
-        line-height: 1.6;
-        opacity: 0.95;
+        max-width: 760px;
+        font-size: 1.04rem;
+        line-height: 1.7;
+        opacity: 0.96;
       }
 
       .layout {
         display: grid;
-        grid-template-columns: 260px 1fr;
+        grid-template-columns: 270px 1fr;
         gap: 24px;
         margin-top: 24px;
       }
@@ -63,8 +84,8 @@
       .panel {
         background: var(--panel);
         border: 1px solid var(--border);
-        border-radius: 20px;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+        border-radius: 22px;
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
       }
 
       .subject-list {
@@ -77,20 +98,24 @@
         background: #f8fafc;
         border: 1px solid var(--border);
         color: var(--text);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 14px 16px;
         margin-bottom: 12px;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
         transition: all 0.2s ease;
       }
 
+      .subject-button:hover {
+        transform: translateY(-1px);
+      }
+
       .subject-button.active {
         background: #eef2ff;
-        border-color: rgba(79, 70, 229, 0.4);
+        border-color: rgba(79, 70, 229, 0.45);
         color: var(--primary-dark);
-        box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.15);
       }
 
       .chat-panel {
@@ -109,41 +134,41 @@
 
       .chat-header h2 {
         margin: 0;
-        font-size: 1.4rem;
+        font-size: 1.45rem;
       }
 
       .badge {
         display: inline-block;
-        background: #dcfce7;
+        background: var(--success-soft);
         color: #166534;
-        padding: 6px 10px;
+        padding: 6px 12px;
         border-radius: 999px;
         font-size: 0.8rem;
         font-weight: 700;
       }
 
       .chat-box {
-        height: 340px;
+        height: 360px;
         overflow-y: auto;
         padding: 12px;
         background: #f8fafc;
-        border-radius: 16px;
+        border-radius: 18px;
         border: 1px solid var(--border);
       }
 
       .message {
         margin: 10px 0;
-        padding: 12px 14px;
-        border-radius: 14px;
-        max-width: 85%;
-        line-height: 1.5;
+        padding: 13px 15px;
+        border-radius: 16px;
+        max-width: 88%;
+        line-height: 1.6;
         white-space: pre-line;
       }
 
       .message.user {
         margin-left: auto;
         background: #e0e7ff;
-        color: #1f2937;
+        color: var(--text);
       }
 
       .message.bot {
@@ -151,26 +176,33 @@
         border: 1px solid var(--border);
       }
 
+      .message .label {
+        display: inline-block;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
       .input-row {
         display: flex;
         gap: 12px;
-        margin-top: 16px;
+        margin-top: 18px;
       }
 
       input {
         flex: 1;
         border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 14px 16px;
+        border-radius: 14px;
+        padding: 15px 16px;
         font-size: 1rem;
+        background: #ffffff;
       }
 
       button.send {
         border: none;
         background: var(--primary);
         color: white;
-        border-radius: 12px;
-        padding: 14px 20px;
+        border-radius: 14px;
+        padding: 14px 22px;
         font-size: 1rem;
         font-weight: 700;
         cursor: pointer;
@@ -180,31 +212,79 @@
         background: var(--primary-dark);
       }
 
-      .examples-box {
-        margin-top: 24px;
-        padding: 18px;
+      .info-grid {
+        margin-top: 26px;
+        display: grid;
+        gap: 24px;
       }
 
-      .examples-box h3 {
-        margin-top: 0;
+      .section-box {
+        padding: 20px 22px;
       }
 
-      .examples {
+      .section-box h3 {
+        margin: 0 0 18px;
+        font-size: 1.35rem;
+      }
+
+      .card-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 14px;
+        gap: 16px;
       }
 
+      .topic-card,
+      .task-card,
       .example-card {
-        background: #f8fafc;
+        background: var(--light);
         border: 1px solid var(--border);
+        border-radius: 16px;
         padding: 16px;
-        border-radius: 14px;
+        transition: all 0.2s ease;
       }
 
+      .topic-card:hover,
+      .task-card:hover,
+      .example-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(79, 70, 229, 0.08);
+      }
+
+      .topic-card strong,
+      .task-card strong,
       .example-card strong {
         display: block;
+        font-size: 1rem;
         margin-bottom: 8px;
+      }
+
+      .topic-card p,
+      .task-card p,
+      .example-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .topic-btn,
+      .task-btn {
+        width: 100%;
+        margin-top: 12px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .topic-btn {
+        background: #e0e7ff;
+        color: var(--primary-dark);
+      }
+
+      .task-btn {
+        background: #dcfce7;
+        color: #166534;
       }
 
       @media (max-width: 760px) {
@@ -221,10 +301,13 @@
   <body>
     <div class="container">
       <header class="hero">
-        <h1>ИИ Репетитор</h1>
+        <div class="hero-top">
+          <h1>ИИ Репетитор</h1>
+          <span class="status">Готов помочь в обучении</span>
+        </div>
         <p>
-          Поддержка по математике, русскому языку и программированию. Задай вопрос,
-          выбери предмет и получи понятное объяснение с примером.
+          Привет! Я твой персональный помощник в учёбе. Я объясняю темы простым языком,
+          помогаю решать задачи шаг за шагом и даю карточки для самостоятельной работы.
         </p>
       </header>
 
@@ -244,46 +327,155 @@
           <div id="chatBox" class="chat-box" aria-live="polite"></div>
 
           <div class="input-row">
-            <input id="userInput" type="text" placeholder="Например: реши уравнение 2x + 3 = 7" />
+            <input id="userInput" type="text" placeholder="Например: объясни задачу по шагам или реши пример" />
             <button class="send" id="sendButton">Отправить</button>
           </div>
         </section>
       </main>
 
-      <section class="panel examples-box">
-        <h3>Примеры вопросов</h3>
-        <div class="examples" id="examplesContainer"></div>
-      </section>
+      <div class="info-grid">
+        <section class="panel section-box">
+          <h3 id="topicsTitle">Темы по математике</h3>
+          <div id="topicsContainer" class="card-grid"></div>
+        </section>
+
+        <section class="panel section-box">
+          <h3 id="tasksTitle">Карточки для самостоятельной работы</h3>
+          <div id="tasksContainer" class="card-grid"></div>
+        </section>
+      </div>
     </div>
 
     <script>
       const subjectData = {
         math: {
           title: 'Математика',
-          examples: [
-            'Реши уравнение 2x + 3 = 7',
-            'Что такое проценты?',
-            'Как найти площадь прямоугольника?'
+          greeting: 'Привет! Я помогу тебе разобраться в задаче. Сначала прочитаем условие, затем выделим важные данные и решим шаг за шагом.',
+          topics: [
+            {
+              name: 'Уравнения',
+              description: 'Переносим части, находим неизвестное и проверяем ответ.',
+              prompt: 'Объясни, как решать уравнения по шагам'
+            },
+            {
+              name: 'Дроби и проценты',
+              description: 'Находим часть от числа, дробь от целого и процентные отношения.',
+              prompt: 'Как быстро считать проценты и дроби?'
+            },
+            {
+              name: 'Геометрия',
+              description: 'Работаем с площадью, периметром и свойствами фигур.',
+              prompt: 'Объясни площадь и периметр фигуры'
+            },
+            {
+              name: 'Логические задачи',
+              description: 'Понимаем условие, выбираем способ решения и проверяем ответ.',
+              prompt: 'Как решать логические задачи без ошибки?'
+            }
           ],
-          starter: 'Привет! Я помогу с математикой. Напиши задачу или вопрос, и я объясню по шагам.'
+          tasks: [
+            {
+              title: 'Реши самостоятельно',
+              text: '3x + 7 = 22',
+              hint: 'Сначала вычти 7 из обеих частей.'
+            },
+            {
+              title: 'Задача на проценты',
+              text: 'Найди 25% от 160.',
+              hint: '25% = 1/4, значит дели на 4.'
+            },
+            {
+              title: 'Площадь прямоугольника',
+              text: 'Длина 9 см, ширина 4 см. Найди площадь.',
+              hint: 'Площадь = длина × ширина.'
+            }
+          ]
         },
         russian: {
           title: 'Русский язык',
-          examples: [
-            'Объясни правило "жи-ши"',
-            'Что такое однородные члены?',
-            'Как отличить причастный оборот?'
+          greeting: 'Привет! Я помогу разобраться в правилах языка: орфография, пунктуация, синтаксис и разбор предложений.',
+          topics: [
+            {
+              name: 'Орфография',
+              description: 'Проверяем слова, буквы и исключения.',
+              prompt: 'Объясни правило жи-ши'
+            },
+            {
+              name: 'Пунктуация',
+              description: 'Правильно ставим запятые и знаки препинания.',
+              prompt: 'Когда ставится запятая в сложном предложении?'
+            },
+            {
+              name: 'Синтаксис',
+              description: 'Находим грамматическую основу и второстепенные члены.',
+              prompt: 'Как найти главные члены предложения?'
+            },
+            {
+              name: 'Лексика и стилистика',
+              description: 'Разбираем значения слов, синонимы и стиль речи.',
+              prompt: 'Что такое синонимы и антонимы?'
+            }
           ],
-          starter: 'Привет! Я помогу с русским языком: правила, разборы, орфография и пунктуация.'
+          tasks: [
+            {
+              title: 'Орфографическая карточка',
+              text: 'Вставь пропущенные буквы: ж_ш_, ч_щ_',
+              hint: 'Помни: жи-ши пишутся с и.'
+            },
+            {
+              title: 'Пунктуация',
+              text: 'Расставь запятые: Ветер шуршал и листья летели по дорожке.',
+              hint: 'Проверь, есть ли сложное предложение или однородные сказуемые.'
+            },
+            {
+              title: 'Разбор предложения',
+              text: 'Найди главные члены: В саду цветут яблони.',
+              hint: 'Сперва найди подлежащее и сказуемое.'
+            }
+          ]
         },
         programming: {
           title: 'Программирование',
-          examples: [
-            'Объясни цикл for',
-            'Как работает Python?',
-            'Напиши код для калькулятора'
+          greeting: 'Привет! Я помогу понять логику программирования: переменные, условия, циклы, функции и алгоритмы.',
+          topics: [
+            {
+              name: 'Переменные',
+              description: 'Разбираем, как сохранять данные в программе.',
+              prompt: 'Что такое переменная в Python?'
+            },
+            {
+              name: 'Условия',
+              description: 'Проверяем условия и выбираем ветви выполнения.',
+              prompt: 'Как работает if else?'
+            },
+            {
+              name: 'Циклы',
+              description: 'Повторяем действия нужное количество раз.',
+              prompt: 'Объясни цикл for на примере'
+            },
+            {
+              name: 'Функции',
+              description: 'Делим программу на блоки и переиспользуем код.',
+              prompt: 'Зачем нужны функции в программировании?'
+            }
           ],
-          starter: 'Привет! Я помогу с программированием: Python, JavaScript, алгоритмы и логика.'
+          tasks: [
+            {
+              title: 'Задача на условие',
+              text: 'Напиши программу, которая проверяет, чётное ли число.',
+              hint: 'Используй деление на 2 без остатка.'
+            },
+            {
+              title: 'Цикл',
+              text: 'Выведи числа от 1 до 5 в Python.',
+              hint: 'Используй цикл for и range.'
+            },
+            {
+              title: 'Калькулятор',
+              text: 'Напиши программу для сложения двух чисел.',
+              hint: 'Сначала попроси ввод, потом сложи и выведи результат.'
+            }
+          ]
         }
       };
 
@@ -291,84 +483,128 @@
       const chatBox = document.getElementById('chatBox');
       const userInput = document.getElementById('userInput');
       const sendButton = document.getElementById('sendButton');
-      const examplesContainer = document.getElementById('examplesContainer');
       const subjectTitle = document.getElementById('subjectTitle');
+      const topicsContainer = document.getElementById('topicsContainer');
+      const tasksContainer = document.getElementById('tasksContainer');
+      const topicsTitle = document.getElementById('topicsTitle');
+      const tasksTitle = document.getElementById('tasksTitle');
 
       let currentSubject = 'math';
 
-      function renderExamples(subject) {
-        const examples = subjectData[subject].examples;
-        examplesContainer.innerHTML = examples
+      function addMessage(text, sender) {
+        const message = document.createElement('div');
+        message.className = `message ${sender}`;
+        const label = sender === 'user' ? 'Ты' : 'ИИ';
+        message.innerHTML = `<span class="label">${label}:</span><br>${text}`;
+        chatBox.appendChild(message);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function renderTopics(subject) {
+        const items = subjectData[subject].topics;
+        topicsTitle.textContent = `Темы по ${subjectData[subject].title.toLowerCase()}`;
+        topicsContainer.innerHTML = items
           .map(
             (item) => `
-              <div class="example-card">
-                <strong>${item}</strong>
-                <span>Нажмите, чтобы попробовать</span>
+              <div class="topic-card">
+                <strong>${item.name}</strong>
+                <p>${item.description}</p>
+                <button class="topic-btn" data-prompt="${item.prompt}">Открыть тему</button>
               </div>
             `
           )
           .join('');
 
-        examplesContainer.querySelectorAll('.example-card').forEach((card, index) => {
-          card.addEventListener('click', () => {
-            const text = examples[index];
-            userInput.value = text;
+        topicsContainer.querySelectorAll('.topic-btn').forEach((button) => {
+          button.addEventListener('click', () => {
+            const prompt = button.getAttribute('data-prompt');
+            userInput.value = prompt;
             userInput.focus();
           });
         });
       }
 
-      function addMessage(text, sender) {
-        const message = document.createElement('div');
-        message.className = `message ${sender}`;
-        message.innerHTML = `<strong>${sender === 'user' ? 'Ты' : 'ИИ'}:</strong><br>${text}`;
-        chatBox.appendChild(message);
-        chatBox.scrollTop = chatBox.scrollHeight;
+      function renderTasks(subject) {
+        const items = subjectData[subject].tasks;
+        tasksTitle.textContent = 'Карточки для самостоятельной работы';
+        tasksContainer.innerHTML = items
+          .map(
+            (item) => `
+              <div class="task-card">
+                <strong>${item.title}</strong>
+                <p>${item.text}</p>
+                <p style="margin-top: 8px; color: #166534; font-weight: 700;">Подсказка: ${item.hint}</p>
+                <button class="task-btn" data-task="${item.text}">Решить</button>
+              </div>
+            `
+          )
+          .join('');
+
+        tasksContainer.querySelectorAll('.task-btn').forEach((button) => {
+          button.addEventListener('click', () => {
+            const task = button.getAttribute('data-task');
+            userInput.value = `Реши задачу: ${task}`;
+            userInput.focus();
+          });
+        });
       }
 
       function getReply(subject, question) {
         const q = question.toLowerCase();
 
+        if (q.includes('привет') || q.includes('здравств') || q.includes('добрый')) {
+          return `${subjectData[subject].greeting} Я могу объяснить тему, показать пример и помочь решить задачу.`;
+        }
+
         if (subject === 'math') {
           if (q.includes('урав') || q.includes('реши')) {
-            return 'Чтобы решить уравнение, нужно перенести известные числа в одну сторону, а переменные — в другую. Например: 2x + 3 = 7 → 2x = 4 → x = 2. Всегда проверяй ответ подстановкой.';
+            return 'Сначала смотрим на уравнение. Нужно изолировать неизвестное: перенести числа в одну сторону, а переменную — в другую. Например, для 3x + 7 = 22: вычитаем 7 из обеих частей, получаем 3x = 15, затем делим на 3, x = 5. Проверка: 3×5 + 7 = 22.';
           }
-          if (q.includes('процент')) {
-            return 'Процент — это одна сотая часть числа. Например, 25% от 200 = 200 × 25 / 100 = 50. Для расчёта: часть = число × процент / 100.';
+          if (q.includes('процент') || q.includes('дроб')) {
+            return 'Чтобы найти процент от числа, умножаем число на процент и делим на 100. Например, 25% от 160: 160 × 25 / 100 = 40. Если запомнить, 25% — это четверть числа.';
           }
-          if (q.includes('площад') || q.includes('прямоуголь')) {
-            return 'Площадь прямоугольника равна произведению длины на ширину: S = a × b. Например, если a = 5, b = 3, то S = 15.';
+          if (q.includes('площад') || q.includes('периметр') || q.includes('фиг')) {
+            return 'Площадь прямоугольника равна длине, умноженной на ширину: S = a × b. Периметр — это сумма всех сторон: P = 2(a + b). Сначала найдём, что дано, а потом подставим числа.';
           }
-          return 'Математика строится на логике и правилах. Попробуй сформулировать задачу точнее: уравнение, дроби, проценты, геометрия или алгебра. Я помогу по шагам.';
+          if (q.includes('логик') || q.includes('задача')) {
+            return 'Логические задачи удобно решать по шагам: 1) выписать известные данные; 2) понять, что требуется найти; 3) сделать простую схему или таблицу; 4) проверить ответ. Иногда помогает кратко записать условие.';
+          }
+          return 'Понимание в математике приходит через шаги. Сначала определяем, что известно, потом что нужно найти, и только после этого выбираем формулу или способ решения.';
         }
 
         if (subject === 'russian') {
           if (q.includes('жи') || q.includes('ши')) {
-            return 'Правило: в словах пишется "жи" и "ши" через "и": жить, шишка, жизнь. Исключения есть, но в большинстве слов это правило работает.';
+            return 'Правило: в словах пишется «жи» и «ши» через букву и: жить, шишка, глушь. Важно запомнить: чаще всего это правило работает в словах с сочетаниями жи-ши. Сначала проверяй написание, потом добавляй пример.';
           }
-          if (q.includes('однород') || q.includes('члены')) {
-            return 'Однородные члены отвечают на один и тот же вопрос и относятся к одному слову. Например: "В саду росли яблоки, груши, вишни". Они обычно соединяются перечислительной интонацией.';
+          if (q.includes('запят') || q.includes('пункт')) {
+            return 'Запятая ставится между частями сложного предложения или между однородными членами. Сначала задайте вопрос: есть ли две грамматические основы? Если да, ставим запятую. Если есть однородные члены, они тоже часто разделяются запятыми.';
           }
-          if (q.includes('причаст') || q.includes('оборот')) {
-            return 'Причастный оборот — это причастие с зависимыми словами. Он обычно выделяется запятыми, если стоит после определения. Например: "Дом, построенный братом, стоял рядом".';
+          if (q.includes('главн') || q.includes('предлож')) {
+            return 'Главные члены предложения — это подлежащее и сказуемое. Подлежащее отвечает на вопрос кто? что?, а сказуемое — что делает? что такое? Сначала найдите действие и того, кто его выполняет.';
           }
-          return 'В русском языке важно смотреть на правило, слово, вопрос и контекст. Если хочешь, я могу объяснить орфографию, пунктуацию или разбор предложения.';
+          if (q.includes('син') || q.includes('слово')) {
+            return 'Слова могут быть близкими по смыслу — синонимы, или противоположными — антонимы. В тексте важно понимать, что именно слово передаёт настроение и смысл, чтобы делать правильный выбор.';
+          }
+          return 'В русском языке важно смотреть на правило, вопрос и смысл предложения. Сначала выясни, что именно спрашивается, а потом выбери нужное правило и проверь его на примере.';
         }
 
         if (subject === 'programming') {
+          if (q.includes('if') || q.includes('услов') || q.includes('else')) {
+            return 'Условие проверяет выражение и выбирает один из вариантов. Например: if a > 0: print("Положительное") else: print("Отрицательное"). Сначала проверяем условие, потом выполняем нужный блок кода.';
+          }
           if (q.includes('for') || q.includes('цикл')) {
-            return 'Цикл for выполняется заданное число раз. В Python: for i in range(5): print(i). Он проходит значения 0, 1, 2, 3, 4.';
+            return 'Цикл for выполняет одинаковые действия несколько раз. Например, for i in range(5): print(i) выведет 0, 1, 2, 3, 4. Цикл удобен, когда нужно повторить одно и то же действие несколько раз.';
           }
-          if (q.includes('python') || q.includes('пайтон')) {
-            return 'Python — простой и читабельный язык. Он подходит для задач, анализа данных, автоматизации и веба. Основные блоки: переменные, функции, циклы и условия.';
+          if (q.includes('функ') || q.includes('def')) {
+            return 'Функция — это блок кода, который можно использовать много раз. Она помогает не повторять одно и то же. Пример: def sum(a, b): return a + b. После этого можно вызывать функцию несколько раз.';
           }
-          if (q.includes('калькулятор')) {
-            return 'Вот простая версия на Python:\n\nnum1 = float(input("Первое число: "))\nnum2 = float(input("Второе число: "))\nop = input("Операция (+, -, *, /): ")\n\nif op == "+":\n    print(num1 + num2)\nelif op == "-":\n    print(num1 - num2)\n# и так далее';
+          if (q.includes('перем') || q.includes('python')) {
+            return 'Переменная хранит данные в памяти. Например: x = 10. Потом можно использовать x в вычислениях или выводе. Название переменной должно быть понятным и описывать её смысл.';
           }
-          return 'Программирование — это логика и алгоритмы. Я могу объяснить переменные, условия, циклы, функции или помочь написать код по задаче.';
+          return 'Программирование — это про логику и последовательность. Сначала пойми задачу, потом реши её по шагам, а затем переведи решение в код.';
         }
 
-        return 'Я не совсем понял тему. Выбери предмет: математика, русский или программирование.';
+        return 'Я помогу тебе разобраться. Напиши тему, задачу или пример, и я объясню её понятно и по шагам.';
       }
 
       function handleSend() {
@@ -378,11 +614,11 @@
         addMessage(question, 'user');
         userInput.value = '';
 
-        const reply = getReply(currentSubject, question);
+        const response = getReply(currentSubject, question);
 
         setTimeout(() => {
-          addMessage(reply, 'bot');
-        }, 400);
+          addMessage(response, 'bot');
+        }, 350);
       }
 
       subjects.forEach((button) => {
@@ -391,10 +627,11 @@
           subjectTitle.textContent = subjectData[currentSubject].title;
           subjects.forEach((el) => el.classList.toggle('active', el === button));
 
-          const initial = subjectData[currentSubject].starter;
+          const welcome = subjectData[currentSubject].greeting;
           chatBox.innerHTML = '';
-          addMessage(initial, 'bot');
-          renderExamples(currentSubject);
+          addMessage(welcome, 'bot');
+          renderTopics(currentSubject);
+          renderTasks(currentSubject);
         });
       });
 
@@ -405,8 +642,9 @@
         }
       });
 
-      renderExamples(currentSubject);
-      addMessage(subjectData[currentSubject].starter, 'bot');
+      renderTopics(currentSubject);
+      renderTasks(currentSubject);
+      addMessage(subjectData[currentSubject].greeting, 'bot');
     </script>
   </body>
 </html>
