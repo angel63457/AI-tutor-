@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Игры | ИИ Репетитор</title>
+    <style>
+      :root {
+        --bg: #f4f7ff;
+        --panel: #ffffff;
+        --primary: #4f46e5;
+        --primary-dark: #312e81;
+        --secondary: #7c3aed;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #dfe7f5;
+        --soft: #f8fafc;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eef2ff 0%, #f8fbff 100%);
+        color: var(--text);
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      .top-nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 18px 24px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--primary-dark);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+        background: rgba(79, 70, 229, 0.08);
+        border: 1px solid rgba(79, 70, 229, 0.12);
+        color: var(--primary-dark);
+      }
+
+      .nav-link.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        color: white;
+        border-radius: 24px;
+        padding: 26px 24px;
+        margin-bottom: 22px;
+      }
+
+      .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 4vw, 3rem);
+      }
+
+      .hero p {
+        margin: 0;
+        line-height: 1.7;
+        opacity: 0.96;
+      }
+
+      .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .game-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.08);
+      }
+
+      .game-card h3 {
+        margin: 0 0 10px;
+      }
+
+      .game-card p {
+        color: var(--muted);
+        line-height: 1.6;
+        margin: 0 0 14px;
+      }
+
+      .option-list {
+        display: grid;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .option {
+        border: 1px solid var(--border);
+        background: var(--soft);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 10px 12px;
+        text-align: left;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .option:disabled {
+        cursor: default;
+      }
+
+      .option.correct {
+        background: #ecfdf5;
+        border-color: #bbf7d0;
+        color: #166534;
+      }
+
+      .option.wrong {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #991b1b;
+      }
+
+      .status {
+        margin-top: 14px;
+        min-height: 52px;
+        border-radius: 12px;
+        padding: 12px 14px;
+        border: 1px solid var(--border);
+        background: #eff6ff;
+        color: #1d4ed8;
+        line-height: 1.6;
+      }
+
+      .status.good {
+        background: #ecfdf5;
+        border-color: #bbf7d0;
+        color: #166534;
+      }
+
+      .status.bad {
+        background: #fef2f2;
+        border-color: #fecaca;
+        color: #991b1b;
+      }
+
+      .reset-btn {
+        margin-top: 24px;
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        background: var(--primary);
+        color: white;
+        font-weight: 800;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="brand">ИИ Репетитор</div>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html">ИИ</a>
+        <a class="nav-link" href="homework.html">Домашка</a>
+        <a class="nav-link active" href="games.html">Игры</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="hero">
+        <h1>Мини-игры на логику</h1>
+        <p>Играй, думай, тренируйся. Логика развивается не от скуки, а от регулярной практики.</p>
+      </div>
+
+      <div class="game-grid">
+        <div class="game-card" data-game="1">
+          <h3>Логическая цепочка</h3>
+          <p>Найди закономерность: 2, 4, 8, 16, ?</p>
+          <div class="option-list">
+            <button class="option" data-correct="false">18</button>
+            <button class="option" data-correct="true">32</button>
+            <button class="option" data-correct="false">24</button>
+            <button class="option" data-correct="false">20</button>
+          </div>
+          <div class="status">Выбери ответ.</div>
+        </div>
+
+        <div class="game-card" data-game="2">
+          <h3>Секретное число</h3>
+          <p>На сколько увеличивается число каждый раз: 5, 10, 15, 20, ?</p>
+          <div class="option-list">
+            <button class="option" data-correct="false">22</button>
+            <button class="option" data-correct="false">18</button>
+            <button class="option" data-correct="true">25</button>
+            <button class="option" data-correct="false">21</button>
+          </div>
+          <div class="status">Выбери ответ.</div>
+        </div>
+
+        <div class="game-card" data-game="3">
+          <h3>Найди лишнее</h3>
+          <p>Что лишнее: яблоко, груша, морковь, слива?</p>
+          <div class="option-list">
+            <button class="option" data-correct="false">Яблоко</button>
+            <button class="option" data-correct="false">Груша</button>
+            <button class="option" data-correct="true">Морковь</button>
+            <button class="option" data-correct="false">Слива</button>
+          </div>
+          <div class="status">Выбери ответ.</div>
+        </div>
+      </div>
+
+      <button class="reset-btn" id="resetBtn">Сбросить ответы</button>
+    </div>
+
+    <script>
+      function resetGame(gameCard) {
+        const buttons = gameCard.querySelectorAll('.option');
+        buttons.forEach((btn) => {
+          btn.disabled = false;
+          btn.classList.remove('correct', 'wrong');
+        });
+        const status = gameCard.querySelector('.status');
+        status.className = 'status';
+        status.textContent = 'Выбери ответ.';
+      }
+
+      document.querySelectorAll('.option').forEach((button) => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.game-card');
+          const buttons = card.querySelectorAll('.option');
+          const status = card.querySelector('.status');
+
+          buttons.forEach((btn) => {
+            btn.disabled = true;
+            if (btn.dataset.correct === 'true') {
+              btn.classList.add('correct');
+            }
+          });
+
+          if (button.dataset.correct === 'true') {
+            button.classList.add('correct');
+            status.className = 'status good';
+            status.textContent = 'Правильно. Логика есть, и это хорошо.';
+          } else {
+            button.classList.add('wrong');
+            status.className = 'status bad';
+            status.textContent = 'Неверно. Подумай ещё. Логика любит внимательность.';
+          }
+        });
+      });
+
+      document.getElementById('resetBtn').addEventListener('click', () => {
+        document.querySelectorAll('.game-card').forEach(resetGame);
+      });
+    </script>
+  </body>
+</html>
