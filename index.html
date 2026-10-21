@@ -11,17 +11,16 @@
         --primary: #4f46e5;
         --primary-dark: #312e81;
         --secondary: #7c3aed;
-        --accent: #22c55e;
-        --success-soft: #dcfce7;
-        --soft-purple: #ede9fe;
-        --soft-blue: #dbeafe;
-        --soft-pink: #fce7f3;
-        --warning-soft: #fef3c7;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
         --text: #1f2937;
         --muted: #6b7280;
         --border: #dfe7f5;
-        --light: #f8fafc;
-        --shadow: rgba(79, 70, 229, 0.14);
+        --soft: #f8fafc;
+        --soft-purple: #efe7ff;
+        --soft-blue: #e0f2fe;
+        --soft-pink: #fce7f3;
       }
 
       * { box-sizing: border-box; }
@@ -32,7 +31,6 @@
         background: linear-gradient(135deg, #edf2ff 0%, #f8fbff 100%);
         color: var(--text);
       }
-
       a { color: inherit; text-decoration: none; }
 
       .top-nav {
@@ -48,7 +46,7 @@
 
       .brand {
         font-size: 1.4rem;
-        font-weight: 800;
+        font-weight: 900;
         color: var(--primary-dark);
       }
 
@@ -59,12 +57,12 @@
       }
 
       .nav-link {
-        background: rgba(79, 70, 229, 0.08);
-        border: 1px solid rgba(79, 70, 229, 0.12);
-        color: var(--primary-dark);
         padding: 9px 14px;
         border-radius: 999px;
         font-weight: 700;
+        background: rgba(79, 70, 229, 0.08);
+        border: 1px solid rgba(79, 70, 229, 0.12);
+        color: var(--primary-dark);
       }
 
       .nav-link.active {
@@ -83,7 +81,7 @@
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         color: white;
         border-radius: 28px;
-        padding: 30px 28px;
+        padding: 32px 28px;
         box-shadow: 0 18px 42px rgba(79, 70, 229, 0.25);
       }
 
@@ -98,7 +96,7 @@
 
       .hero h1 {
         margin: 0;
-        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        font-size: clamp(2.2rem, 4vw, 3.4rem);
       }
 
       .status {
@@ -111,9 +109,9 @@
 
       .hero p {
         margin: 0;
-        max-width: 780px;
-        font-size: 1.05rem;
-        line-height: 1.75;
+        max-width: 820px;
+        font-size: 1.04rem;
+        line-height: 1.8;
         opacity: 0.96;
       }
 
@@ -160,7 +158,14 @@
         font-weight: 700;
       }
 
-      .subject-button:hover, .grade-button:hover, .topic-btn:hover, .quick-btn:hover, .task-btn:hover, .game-btn:hover, .send:hover, .daily-btn:hover {
+      .subject-button:hover,
+      .grade-button:hover,
+      .topic-btn:hover,
+      .quick-btn:hover,
+      .task-btn:hover,
+      .game-btn:hover,
+      .send:hover,
+      .daily-btn:hover {
         transform: translateY(-1px);
       }
 
@@ -227,7 +232,7 @@
 
       .badge {
         display: inline-block;
-        background: var(--success-soft);
+        background: #dcfce7;
         color: #166534;
         padding: 6px 12px;
         border-radius: 999px;
@@ -259,7 +264,7 @@
       }
 
       .message.bot {
-        background: #ffffff;
+        background: white;
         border: 1px solid var(--border);
       }
 
@@ -281,7 +286,7 @@
         border-radius: 14px;
         padding: 15px 16px;
         font-size: 1rem;
-        background: #ffffff;
+        background: white;
       }
 
       .send {
@@ -320,11 +325,11 @@
       }
 
       .topic-card, .homework-card, .game-card, .grade-card, .exam-card, .example-card {
-        background: var(--light);
+        background: var(--soft);
         border: 1px solid var(--border);
         border-radius: 18px;
         padding: 16px;
-        box-shadow: 0 10px 20px var(--shadow);
+        box-shadow: 0 10px 20px rgba(79, 70, 229, 0.08);
       }
 
       .topic-card strong, .homework-card strong, .game-card strong, .grade-card strong, .exam-card strong, .example-card strong {
@@ -391,13 +396,29 @@
         color: #9d174d;
       }
 
-      .daily-banner {
-        margin-bottom: 18px;
+      .daily-strip {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 16px 18px;
         background: linear-gradient(135deg, #eef2ff, #f5f3ff);
-        border: 1px solid rgba(79, 70, 229, 0.18);
+        border: 1px solid rgba(79, 70, 229, 0.15);
         border-radius: 16px;
-        padding: 14px 16px;
-        color: var(--primary-dark);
+      }
+
+      .daily-strip strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .daily-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 14px;
         font-weight: 700;
       }
 
@@ -424,8 +445,8 @@
           <span class="status">Строгий, но поддерживающий</span>
         </div>
         <p>
-          Привет! Я твой строгий, но справедливый наставник. Я объясняю материал ясно, проверяю решения,
-          ругаю за лень, но поддерживаю, когда ты делаешь усилие. Учись регулярно, решай задачи и развивай логику.
+          Привет! Я твой личный наставник. Я объясняю темы просто и понятно, помогаю решать задачи шаг за шагом,
+          проверяю логику, даю домашние задания и поддерживаю дисциплину. Учёба — это не лень, а система.
         </p>
       </header>
 
@@ -463,6 +484,14 @@
         </section>
       </main>
 
+      <div class="daily-strip">
+        <div>
+          <strong>Сегодняшний план</strong>
+          <span id="dailyPlan">Математика: 10 минут повторения + 2 задачи</span>
+        </div>
+        <button class="daily-btn" id="dailyBtn">Начать урок</button>
+      </div>
+
       <div class="content-sections">
         <section class="panel section-box">
           <h3 id="themesTitle">Темы по математике</h3>
@@ -495,7 +524,8 @@
       const subjectData = {
         math: {
           title: 'Математика',
-          greeting: 'Привет. Сегодня работаешь без отговорок. Сначала разберём условие, затем решим по шагам, а потом проверим ответ.',
+          greeting: 'Привет. Сегодня без отговорок. Сначала разберём условие, затем решим по шагам, а потом проверим ответ.',
+          dailyPlan: 'Математика: 10 минут повторения + 2 задачи + итог за 5 минут',
           themes: [
             { name: 'Уравнения', grade: '5-6', desc: 'Переносим части и находим неизвестное.', prompt: 'Объясни, как решать уравнения корректно и без ошибок' },
             { name: 'Дроби и проценты', grade: '5-7', desc: 'Считаем часть от целого без паники.', prompt: 'Как быстро решать задачи на проценты?' },
@@ -503,9 +533,9 @@
             { name: 'Логические задачи', grade: '5-9', desc: 'Находим логику, а не просто угадываем.', prompt: 'Как решать логические задачи без ошибок?' }
           ],
           homework: [
-            { title: 'Домашняя работа 1', text: 'Реши уравнение: 3x + 7 = 22', hint: 'Сначала вычти 7 из обеих частей.' },
-            { title: 'Домашняя работа 2', text: 'Найди 25% от 160', hint: '25% — это 1/4 числа.' },
-            { title: 'Домашняя работа 3', text: 'Площадь прямоугольника 36 см², ширина 4 см. Найди длину.', hint: 'Площадь = длина × ширина.' }
+            { title: 'Задание 1', text: 'Реши уравнение: 3x + 7 = 22', hint: 'Сначала вычти 7 из обеих частей.' },
+            { title: 'Задание 2', text: 'Найди 25% от 160', hint: '25% — это 1/4 числа.' },
+            { title: 'Задание 3', text: 'Площадь прямоугольника 36 см², ширина 4 см. Найди длину.', hint: 'Площадь = длина × ширина.' }
           ],
           games: [
             { title: 'Логическая цепочка', text: 'Найди закономерность: 2, 4, 8, 16, ?', prompt: 'Найди закономерность и объясни логику' },
@@ -528,16 +558,17 @@
         russian: {
           title: 'Русский язык',
           greeting: 'Привет. Сегодня без ошибок. Сначала правило, затем пример, затем проверка. Всё просто, когда работаешь аккуратно.',
+          dailyPlan: 'Русский: 10 минут на правило + 1 мини-рассуждение + 1 диктант',
           themes: [
             { name: 'Орфография', grade: '5-7', desc: 'Проверяем буквы и правописание.', prompt: 'Объясни правило жи-ши и его исключения' },
-            { name: 'Пунктуация', grade: '5-9', desc: 'Ставим запятые, тире и двоеточия.', prompt: 'Когда ставится з��пятая в сложном предложении?' },
+            { name: 'Пунктуация', grade: '5-9', desc: 'Ставим запятые, тире и двоеточия.', prompt: 'Когда ставится запятая в сложном предложении?' },
             { name: 'Синтаксис', grade: '5-9', desc: 'Находим главные члены и структуру.', prompt: 'Как найти подлежащее и сказуемое?' },
             { name: 'Лексика', grade: '5-9', desc: 'Синонимы, антонимы и смысл слов.', prompt: 'Что такое синонимы и антонимы?' }
           ],
           homework: [
             { title: 'Задание 1', text: 'Вставь пропущенные буквы: ж_ш_, ч_щ_', hint: 'Пиши жи-ши через и.' },
             { title: 'Задание 2', text: 'Расставь запятые: Ветер шуршал и листья летели по дорожке.', hint: 'Проверь, есть ли однородные сказуемые.' },
-            { title: 'Задание 3', text: 'Найди главные члены: В саду цветут яблони.', hint: 'Сначала найди кто? что? и что делает?' }
+            { title: 'Задание 3', text: 'Найди главные члены: В саду цветут яблони.', hint: 'Сначала найди, кто действует.' }
           ],
           games: [
             { title: 'Слово-оборотень', text: 'Найди лишнее слово по смыслу и объясни выбор.', prompt: 'Помоги найти лишнее слово и объясни причину' },
@@ -552,14 +583,15 @@
             9: ['Разбор текста', 'Функциональные стили', 'Подготовка к ВПР']
           },
           exam: [
-            { title: 'Пробник 1', text: 'Определи, какой знак нужен: Я пошёл домой ... дождь закончился.', hint: 'Смотри на смысл и структуру предложения.' },
-            { title: 'Пробник 2', text: 'Найди главное слово в словосочетании: новая тетрадь', hint: 'Слово, от которого зависит другое, становится главным.' },
-            { title: 'Пробник 3', text: 'Разбери предложение: На лугу росли красивые цветы.', hint: 'Сначала найди подлежащее и сказуемое.' }
+            { title: 'Пробник 1', text: 'Определи, какой знак нужен: Я пошёл домой ... дождь закончился.', hint: 'Смотри на смысл.' },
+            { title: 'Пробник 2', text: 'Найди главное слово в словосочетании: новая тетрадь', hint: 'Слово, от которого зависит другое.' },
+            { title: 'Пробник 3', text: 'Разбери предложение: На лугу росли красивые цветы.', hint: 'Сначала найди грамматическую основу.' }
           ]
         },
         programming: {
           title: 'Программирование',
           greeting: 'Привет. Ты не можешь просто смотреть. Сначала думаешь, потом пишешь код, потом проверяешь логику. Так и растёт навык.',
+          dailyPlan: 'Программирование: 10 минут на теорию + 1 задача + 5 минут на проверку',
           themes: [
             { name: 'Переменные', grade: '5-7', desc: 'Что такое данные и как их сохранить.', prompt: 'Что такое переменная в Python?' },
             { name: 'Условия', grade: '5-9', desc: 'if, else и логические проверки.', prompt: 'Как работает условный оператор if?' },
@@ -607,9 +639,10 @@
       const gamesContainer = document.getElementById('gamesContainer');
       const gradesContainer = document.getElementById('gradesContainer');
       const examContainer = document.getElementById('examContainer');
+      const dailyPlan = document.getElementById('dailyPlan');
+      const dailyBtn = document.getElementById('dailyBtn');
 
       let currentSubject = 'math';
-      let currentGrade = '5';
 
       function addMessage(text, sender) {
         const message = document.createElement('div');
@@ -696,7 +729,6 @@
         gradesContainer.querySelectorAll('.quick-btn').forEach((button) => {
           button.addEventListener('click', () => {
             const selectedGrade = button.getAttribute('data-grade');
-            currentGrade = selectedGrade;
             gradeButtons.forEach((g) => g.classList.toggle('active', g.dataset.grade === selectedGrade));
             userInput.value = `Подготовь материал для ${selectedGrade} класса по ${subjectData[currentSubject].title.toLowerCase()}`;
             userInput.focus();
@@ -744,7 +776,7 @@
           if (q.includes('логик') || q.includes('закономер')) {
             return 'Логические задачи решаются по шагам: данные, связь, проверка. Не пытайся угадывать — ищи закономерность и строй доказательство.';
           }
-          return 'Математика — это дисциплина. Сначала выясни, что известно, что нужно найти, потом выбирай формулу и проверяй отве��.';
+          return 'Математика — это дисциплина. Сначала выясни, что известно, что нужно найти, потом выбери формулу и проверь ответ.';
         }
 
         if (subject === 'russian') {
@@ -755,7 +787,7 @@
             return 'Запятая ставится между частями сложного предложения и между однородными членами. Сначала ищи грамматическую основу, потом решай, нужен ли знак.';
           }
           if (q.includes('главн') || q.includes('предлож')) {
-            return 'Главные члены предложения — подлежащее и сказуемое. Подлежащее отвечает на вопрос кто? что?, а сказуемое — что делает? что такое?' ;
+            return 'Главные члены предложения — подлежащее и сказуемое. Подлежащее отвечает на вопрос кто? что?, а сказуемое — что делает? что такое?';
           }
           if (q.includes('синоним') || q.includes('антоним')) {
             return 'Синонимы — близкие по смыслу слова, антонимы — противоположные. Слова выбираются по смыслу текста, а не случайно.';
@@ -795,6 +827,7 @@
 
       function refreshPage() {
         subjectTitle.textContent = subjectData[currentSubject].title;
+        dailyPlan.textContent = subjectData[currentSubject].dailyPlan;
         renderThemes(currentSubject);
         renderHomework(currentSubject);
         renderGames(currentSubject);
@@ -814,9 +847,9 @@
 
       gradeButtons.forEach((button) => {
         button.addEventListener('click', () => {
-          currentGrade = button.dataset.grade;
+          const selectedGrade = button.dataset.grade;
           gradeButtons.forEach((el) => el.classList.toggle('active', el === button));
-          userInput.value = `Подготовь материал для ${currentGrade} класса по ${subjectData[currentSubject].title.toLowerCase()}`;
+          userInput.value = `Подготовь материал для ${selectedGrade} класса по ${subjectData[currentSubject].title.toLowerCase()}`;
           userInput.focus();
         });
       });
@@ -824,6 +857,12 @@
       sendButton.addEventListener('click', handleSend);
       userInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') handleSend();
+      });
+
+      dailyBtn.addEventListener('click', () => {
+        const prompt = `Составь короткий ${subjectData[currentSubject].title.toLowerCase()} урок на 15 минут: объяснение, пример и 2 задания.`;
+        userInput.value = prompt;
+        userInput.focus();
       });
 
       refreshPage();
