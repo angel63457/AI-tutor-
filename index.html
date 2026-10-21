@@ -6,10 +6,10 @@
     <title>ИИ Репетитор</title>
     <style>
       :root {
-        --bg: #f3f6ff;
+        --bg: #f4f7ff;
         --panel: #ffffff;
         --primary: #4f46e5;
-        --primary-dark: #3730a3;
+        --primary-dark: #312e81;
         --secondary: #7c3aed;
         --accent: #22c55e;
         --success-soft: #dcfce7;
@@ -21,20 +21,56 @@
         --muted: #6b7280;
         --border: #dfe7f5;
         --light: #f8fafc;
-        --shadow: rgba(79, 70, 229, 0.12);
+        --shadow: rgba(79, 70, 229, 0.14);
       }
 
       * { box-sizing: border-box; }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%);
+        background: linear-gradient(135deg, #edf2ff 0%, #f8fbff 100%);
         color: var(--text);
+      }
+
+      a { color: inherit; text-decoration: none; }
+
+      .top-nav {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 18px 24px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .nav-link {
+        background: rgba(79, 70, 229, 0.08);
+        border: 1px solid rgba(79, 70, 229, 0.12);
+        color: var(--primary-dark);
+        padding: 9px 14px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .nav-link.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
       }
 
       .container {
@@ -47,7 +83,7 @@
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         color: white;
         border-radius: 28px;
-        padding: 32px 28px;
+        padding: 30px 28px;
         box-shadow: 0 18px 42px rgba(79, 70, 229, 0.25);
       }
 
@@ -62,21 +98,20 @@
 
       .hero h1 {
         margin: 0;
-        font-size: clamp(2.2rem, 4vw, 3.4rem);
+        font-size: clamp(2.2rem, 4vw, 3.5rem);
       }
 
       .status {
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.18);
         border-radius: 999px;
-        padding: 9px 14px;
+        padding: 8px 14px;
         font-weight: 700;
-        letter-spacing: 0.02em;
       }
 
       .hero p {
         margin: 0;
-        max-width: 760px;
+        max-width: 780px;
         font-size: 1.05rem;
         line-height: 1.75;
         opacity: 0.96;
@@ -103,10 +138,11 @@
       .subject-button,
       .grade-button,
       .topic-btn,
-      .homework-btn,
+      .quick-btn,
+      .task-btn,
       .game-btn,
-      .exam-btn,
-      .quick-btn {
+      .send,
+      .daily-btn {
         cursor: pointer;
         transition: all 0.2s ease;
       }
@@ -124,7 +160,7 @@
         font-weight: 700;
       }
 
-      .subject-button:hover {
+      .subject-button:hover, .grade-button:hover, .topic-btn:hover, .quick-btn:hover, .task-btn:hover, .game-btn:hover, .send:hover, .daily-btn:hover {
         transform: translateY(-1px);
       }
 
@@ -143,9 +179,9 @@
 
       .grade-list h4 {
         margin: 0 0 12px;
-        font-size: 0.95rem;
+        font-size: 0.76rem;
         color: var(--muted);
-        letter-spacing: 0.04em;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
@@ -158,10 +194,10 @@
       .grade-button {
         border: 1px solid var(--border);
         background: #f8fafc;
+        color: var(--text);
         border-radius: 12px;
         padding: 9px 8px;
         font-weight: 700;
-        color: var(--text);
       }
 
       .grade-button.active {
@@ -220,7 +256,6 @@
       .message.user {
         margin-left: auto;
         background: #e0e7ff;
-        color: var(--text);
       }
 
       .message.bot {
@@ -249,7 +284,7 @@
         background: #ffffff;
       }
 
-      button.send {
+      .send {
         border: none;
         background: var(--primary);
         color: white;
@@ -259,7 +294,7 @@
         font-weight: 700;
       }
 
-      button.send:hover {
+      .send:hover {
         background: var(--primary-dark);
       }
 
@@ -284,12 +319,7 @@
         gap: 16px;
       }
 
-      .topic-card,
-      .homework-card,
-      .game-card,
-      .grade-card,
-      .exam-card,
-      .example-card {
+      .topic-card, .homework-card, .game-card, .grade-card, .exam-card, .example-card {
         background: var(--light);
         border: 1px solid var(--border);
         border-radius: 18px;
@@ -297,102 +327,105 @@
         box-shadow: 0 10px 20px var(--shadow);
       }
 
-      .topic-card strong,
-      .homework-card strong,
-      .game-card strong,
-      .grade-card strong,
-      .exam-card strong,
-      .example-card strong {
+      .topic-card strong, .homework-card strong, .game-card strong, .grade-card strong, .exam-card strong, .example-card strong {
         display: block;
         margin-bottom: 8px;
         font-size: 1rem;
       }
 
-      .topic-card p,
-      .homework-card p,
-      .game-card p,
-      .grade-card p,
-      .exam-card p,
-      .example-card p {
+      .topic-card p, .homework-card p, .game-card p, .grade-card p, .exam-card p, .example-card p {
         margin: 0;
         color: var(--muted);
         line-height: 1.55;
       }
 
-      .topic-btn,
-      .homework-btn,
-      .game-btn,
-      .exam-btn,
-      .quick-btn {
+      .topic-btn, .quick-btn {
         width: 100%;
         margin-top: 12px;
         border: none;
         border-radius: 10px;
         padding: 10px 12px;
         font-weight: 700;
-      }
-
-      .topic-btn,
-      .quick-btn {
         background: #e0e7ff;
         color: var(--primary-dark);
       }
 
-      .homework-btn,
-      .exam-btn {
+      .homework-btn, .exam-btn {
+        width: 100%;
+        margin-top: 12px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-weight: 700;
         background: #dcfce7;
         color: #166534;
       }
 
       .game-btn {
+        width: 100%;
+        margin-top: 12px;
+        border: none;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-weight: 700;
         background: #fdf2f8;
         color: #9d174d;
       }
 
-      .grade-badge {
+      .grade-badge, .mini-banner {
         display: inline-block;
         padding: 5px 8px;
         border-radius: 999px;
-        background: var(--soft-blue);
-        color: var(--primary-dark);
         font-weight: 700;
         font-size: 0.72rem;
         margin-bottom: 8px;
+      }
+
+      .grade-badge {
+        background: var(--soft-blue);
+        color: var(--primary-dark);
       }
 
       .mini-banner {
-        display: inline-block;
         background: var(--soft-pink);
         color: #9d174d;
-        border-radius: 999px;
-        padding: 6px 10px;
-        font-size: 0.72rem;
+      }
+
+      .daily-banner {
+        margin-bottom: 18px;
+        background: linear-gradient(135deg, #eef2ff, #f5f3ff);
+        border: 1px solid rgba(79, 70, 229, 0.18);
+        border-radius: 16px;
+        padding: 14px 16px;
+        color: var(--primary-dark);
         font-weight: 700;
-        margin-bottom: 8px;
       }
 
       @media (max-width: 760px) {
-        .layout {
-          grid-template-columns: 1fr;
-        }
-
-        .input-row {
-          flex-direction: column;
-        }
+        .layout { grid-template-columns: 1fr; }
+        .input-row { flex-direction: column; }
       }
     </style>
   </head>
   <body>
+    <nav class="top-nav">
+      <div class="brand">ИИ Репетитор</div>
+      <div class="nav-links">
+        <a class="nav-link active" href="index.html">ИИ</a>
+        <a class="nav-link" href="homework.html">Домашка</a>
+        <a class="nav-link" href="games.html">Игры</a>
+      </div>
+    </nav>
+
     <div class="container">
       <header class="hero">
         <div class="hero-top">
           <h1>ИИ Репетитор</h1>
-          <span class="status">Готов помочь в обучении</span>
+          <span class="status">Строгий, но поддерживающий</span>
         </div>
         <p>
-          Привет! Я твой онлайн-регетитор. Я объясняю темы простым языком, помогаю решать задачи
-          по шагам, даю домашние задания и провожу мини-игры для развития логики. Выбирай предмет,
-          класс и тему — и начнём учиться эффективно и интересно.
+          Привет! Я твой строгий, но справедливый наставник. Я объясняю материал ясно, проверяю решения,
+          ругаю за лень, но поддерживаю, когда ты делаешь усилие. Учись регулярно, решай задачи и развивай логику.
         </p>
       </header>
 
@@ -462,22 +495,22 @@
       const subjectData = {
         math: {
           title: 'Математика',
-          greeting: 'Привет! Я помогу тебе разобраться в математике: объясню тему, покажу пример и помогаю решать задачу по шагам.',
+          greeting: 'Привет. Сегодня работаешь без отговорок. Сначала разберём условие, затем решим по шагам, а потом проверим ответ.',
           themes: [
-            { name: 'Уравнения', grade: '5-6', desc: 'Переносим части и находим неизвестное.', prompt: 'Объясни решение уравнений по шагам' },
-            { name: 'Дроби и проценты', grade: '5-7', desc: 'Учимся видеть часть от целого и считать в уме.', prompt: 'Как быстро решать задачи на проценты?' },
-            { name: 'Геометрия', grade: '7-9', desc: 'Площадь, периметр и свойства фигур.', prompt: 'Объясни, как находить площадь и периметр фигуры' },
-            { name: 'Логические задачи', grade: '5-9', desc: 'Разбираем условие и строим ход решения.', prompt: 'Как решать логические задачи без ошибок?' }
+            { name: 'Уравнения', grade: '5-6', desc: 'Переносим части и находим неизвестное.', prompt: 'Объясни, как решать уравнения корректно и без ошибок' },
+            { name: 'Дроби и проценты', grade: '5-7', desc: 'Считаем часть от целого без паники.', prompt: 'Как быстро решать задачи на проценты?' },
+            { name: 'Геометрия', grade: '7-9', desc: 'Площадь, периметр и свойства фигур.', prompt: 'Как находить площадь и периметр фигуры?' },
+            { name: 'Логические задачи', grade: '5-9', desc: 'Находим логику, а не просто угадываем.', prompt: 'Как решать логические задачи без ошибок?' }
           ],
           homework: [
             { title: 'Домашняя работа 1', text: 'Реши уравнение: 3x + 7 = 22', hint: 'Сначала вычти 7 из обеих частей.' },
-            { title: 'Домашняя работа 2', text: 'Найди 25% от 160', hint: '25% — это четверть числа.' },
+            { title: 'Домашняя работа 2', text: 'Найди 25% от 160', hint: '25% — это 1/4 числа.' },
             { title: 'Домашняя работа 3', text: 'Площадь прямоугольника 36 см², ширина 4 см. Найди длину.', hint: 'Площадь = длина × ширина.' }
           ],
           games: [
             { title: 'Логическая цепочка', text: 'Найди закономерность: 2, 4, 8, 16, ?', prompt: 'Найди закономерность и объясни логику' },
             { title: 'Магический квадрат', text: 'Подбери числа так, чтобы сумма по строкам была одинаковой.', prompt: 'Помоги решить магический квадрат' },
-            { title: 'Секретный код', text: 'Объясни, как быстро сравнить дроби и найти большую.', prompt: 'Как сравнивать дроби быстро и правильно?' }
+            { title: 'Секретный код', text: 'Объясни, как быстро сравнить дроби и найти большую.', prompt: 'Как сравнивать дроби быстро и без ошибок?' }
           ],
           grades: {
             5: ['Сложение, вычитание, умножение', 'Дроби и задачи на части', 'Основы геометрии'],
@@ -494,11 +527,11 @@
         },
         russian: {
           title: 'Русский язык',
-          greeting: 'Привет! Я помогу с русским языком: разберу правило, покажу пример, объясню орфографию, пунктуацию и разбор предложения.',
+          greeting: 'Привет. Сегодня без ошибок. Сначала правило, затем пример, затем проверка. Всё просто, когда работаешь аккуратно.',
           themes: [
             { name: 'Орфография', grade: '5-7', desc: 'Проверяем буквы и правописание.', prompt: 'Объясни правило жи-ши и его исключения' },
-            { name: 'Пунктуация', grade: '5-9', desc: 'Ставим запятые, тире и двоеточия.', prompt: 'Как правильно ставить запятые в сложных предложениях?' },
-            { name: 'Синтаксис', grade: '5-9', desc: 'Находим главные члены и строение предложения.', prompt: 'Как найти подлежащее и сказуемое в предложении?' },
+            { name: 'Пунктуация', grade: '5-9', desc: 'Ставим запятые, тире и двоеточия.', prompt: 'Когда ставится з��пятая в сложном предложении?' },
+            { name: 'Синтаксис', grade: '5-9', desc: 'Находим главные члены и структуру.', prompt: 'Как найти подлежащее и сказуемое?' },
             { name: 'Лексика', grade: '5-9', desc: 'Синонимы, антонимы и смысл слов.', prompt: 'Что такое синонимы и антонимы?' }
           ],
           homework: [
@@ -526,11 +559,11 @@
         },
         programming: {
           title: 'Программирование',
-          greeting: 'Привет! Я помогу понять программирование: объясню переменные, условия, циклы, функции и алгоритмы простым языком.',
+          greeting: 'Привет. Ты не можешь просто смотреть. Сначала думаешь, потом пишешь код, потом проверяешь логику. Так и растёт навык.',
           themes: [
             { name: 'Переменные', grade: '5-7', desc: 'Что такое данные и как их сохранить.', prompt: 'Что такое переменная в Python?' },
             { name: 'Условия', grade: '5-9', desc: 'if, else и логические проверки.', prompt: 'Как работает условный оператор if?' },
-            { name: 'Циклы', grade: '6-9', desc: 'Повторяем одни и те же действия.', prompt: 'Объясни цикл for на примере' },
+            { name: 'Циклы', grade: '6-9', desc: 'Повторяем действия нужное число раз.', prompt: 'Объясни цикл for на примере' },
             { name: 'Функции', grade: '7-9', desc: 'Переиспользуем блоки кода.', prompt: 'Зачем нужны функции в программировании?' }
           ],
           homework: [
@@ -590,16 +623,14 @@
       function renderThemes(subject) {
         const data = subjectData[subject];
         themesTitle.textContent = `Темы по ${data.title.toLowerCase()}`;
-        themesContainer.innerHTML = data.themes
-          .map((item) => `
-            <div class="topic-card">
-              <span class="grade-badge">${item.grade}</span>
-              <strong>${item.name}</strong>
-              <p>${item.desc}</p>
-              <button class="topic-btn" data-prompt="${item.prompt}">Изучить тему</button>
-            </div>
-          `)
-          .join('');
+        themesContainer.innerHTML = data.themes.map((item) => `
+          <div class="topic-card">
+            <span class="grade-badge">${item.grade}</span>
+            <strong>${item.name}</strong>
+            <p>${item.desc}</p>
+            <button class="topic-btn" data-prompt="${item.prompt}">Изучить тему</button>
+          </div>
+        `).join('');
 
         themesContainer.querySelectorAll('.topic-btn').forEach((button) => {
           button.addEventListener('click', () => {
@@ -612,16 +643,14 @@
       function renderHomework(subject) {
         const data = subjectData[subject];
         homeworkTitle.textContent = 'Домашние задания';
-        homeworkContainer.innerHTML = data.homework
-          .map((item) => `
-            <div class="homework-card">
-              <strong>${item.title}</strong>
-              <p>${item.text}</p>
-              <p style="margin-top: 10px; color: #166534; font-weight: 700;">Подсказка: ${item.hint}</p>
-              <button class="homework-btn" data-task="${item.text}">Решить</button>
-            </div>
-          `)
-          .join('');
+        homeworkContainer.innerHTML = data.homework.map((item) => `
+          <div class="homework-card">
+            <strong>${item.title}</strong>
+            <p>${item.text}</p>
+            <p style="margin-top: 10px; color: #166534; font-weight: 700;">Подсказка: ${item.hint}</p>
+            <button class="homework-btn" data-task="${item.text}">Решить</button>
+          </div>
+        `).join('');
 
         homeworkContainer.querySelectorAll('.homework-btn').forEach((button) => {
           button.addEventListener('click', () => {
@@ -634,16 +663,14 @@
       function renderGames(subject) {
         const data = subjectData[subject];
         gamesTitle.textContent = 'Мини-игры на логику';
-        gamesContainer.innerHTML = data.games
-          .map((item) => `
-            <div class="game-card">
-              <span class="mini-banner">Игровой блок</span>
-              <strong>${item.title}</strong>
-              <p>${item.text}</p>
-              <button class="game-btn" data-prompt="${item.prompt}">Играть</button>
-            </div>
-          `)
-          .join('');
+        gamesContainer.innerHTML = data.games.map((item) => `
+          <div class="game-card">
+            <span class="mini-banner">Игровой блок</span>
+            <strong>${item.title}</strong>
+            <p>${item.text}</p>
+            <button class="game-btn" data-prompt="${item.prompt}">Играть</button>
+          </div>
+        `).join('');
 
         gamesContainer.querySelectorAll('.game-btn').forEach((button) => {
           button.addEventListener('click', () => {
@@ -657,24 +684,21 @@
         const data = subjectData[subject];
         gradesTitle.textContent = 'Блоки по классам 5–9';
         const gradeOrder = ['5', '6', '7', '8', '9'];
-        gradesContainer.innerHTML = gradeOrder
-          .map((grade) => `
-            <div class="grade-card">
-              <span class="grade-badge">Класс ${grade}</span>
-              <strong>${grade}. класс</strong>
-              <p>${data.grades[grade].join('; ')}</p>
-              <button class="quick-btn" data-grade="${grade}">Открыть</button>
-            </div>
-          `)
-          .join('');
+        gradesContainer.innerHTML = gradeOrder.map((grade) => `
+          <div class="grade-card">
+            <span class="grade-badge">Класс ${grade}</span>
+            <strong>${grade}. класс</strong>
+            <p>${data.grades[grade].join('; ')}</p>
+            <button class="quick-btn" data-grade="${grade}">Открыть</button>
+          </div>
+        `).join('');
 
         gradesContainer.querySelectorAll('.quick-btn').forEach((button) => {
           button.addEventListener('click', () => {
             const selectedGrade = button.getAttribute('data-grade');
             currentGrade = selectedGrade;
-            gradeButtons.forEach((g) => g.classList.toggle('active', g.dataset.grade === selectedGrade || (selectedGrade === 'all' && g.dataset.grade === 'all')));
-            const gradeTasks = subjectData[currentSubject].grades[selectedGrade];
-            userInput.value = `Подготовь для ${selectedGrade} класса по ${subjectData[currentSubject].title.toLowerCase()} ${gradeTasks.join(', ')}`;
+            gradeButtons.forEach((g) => g.classList.toggle('active', g.dataset.grade === selectedGrade));
+            userInput.value = `Подготовь материал для ${selectedGrade} класса по ${subjectData[currentSubject].title.toLowerCase()}`;
             userInput.focus();
           });
         });
@@ -683,16 +707,14 @@
       function renderExam(subject) {
         const data = subjectData[subject];
         examTitle.textContent = 'Задания из пробника';
-        examContainer.innerHTML = data.exam
-          .map((item) => `
-            <div class="exam-card">
-              <strong>${item.title}</strong>
-              <p>${item.text}</p>
-              <p style="margin-top: 10px; color: #166534; font-weight: 700;">Подсказка: ${item.hint}</p>
-              <button class="exam-btn" data-task="${item.text}">Проверить</button>
-            </div>
-          `)
-          .join('');
+        examContainer.innerHTML = data.exam.map((item) => `
+          <div class="exam-card">
+            <strong>${item.title}</strong>
+            <p>${item.text}</p>
+            <p style="margin-top: 10px; color: #166534; font-weight: 700;">Подсказка: ${item.hint}</p>
+            <button class="exam-btn" data-task="${item.text}">Проверить</button>
+          </div>
+        `).join('');
 
         examContainer.querySelectorAll('.exam-btn').forEach((button) => {
           button.addEventListener('click', () => {
@@ -706,58 +728,58 @@
         const q = question.toLowerCase();
 
         if (q.includes('привет') || q.includes('здравств') || q.includes('добрый')) {
-          return `${subjectData[subject].greeting} Я могу объяснить тему, дать пример, проверить задачу и предложить мини-игру для тренировки.`;
+          return `${subjectData[subject].greeting} Я могу объяснить тему, показать пример и поставить тебе точную оценку за решение.`;
         }
 
         if (subject === 'math') {
           if (q.includes('урав') || q.includes('реши')) {
-            return 'Сначала смотрим на уравнение: нужно изолировать неизвестное. Например, для 3x + 7 = 22: вычитаем 7 из обеих частей, получаем 3x = 15; затем делим на 3, x = 5. Проверка: 3 × 5 + 7 = 22. Так мы всегда проверяем правильность ответа.';
+            return 'Сначала смотрим на уравнение. Нужно изолировать неизвестное: перенести числа в одну сторону, а переменную — в другую. Например, 3x + 7 = 22: вычитаем 7, получаем 3x = 15; делим на 3, x = 5. Проверка обязательна.';
           }
           if (q.includes('процент') || q.includes('дроб')) {
-            return 'Чтобы найти процент, нужно число умножить на процент и разделить на 100. Например, 25% от 160 — это 160 × 25 / 100 = 40. Зная это, можно решать задачи быстрее и без ошибок.';
+            return 'Чтобы найти процент, умножаем число на процент и делим на 100. Например, 25% от 160 = 160 × 25 / 100 = 40. Запоминай: 25% — это четверть.';
           }
           if (q.includes('площад') || q.includes('периметр') || q.includes('фиг')) {
-            return 'Площадь прямоугольника вычисляется по формуле S = a × b. Периметр — это сумма всех сторон: P = 2(a + b). Сначала выделяем известные данные, потом подставляем их в формулу.';
+            return 'Площадь прямоугольника S = a × b. Периметр P = 2(a + b). Сначала выпиши данные, затем подставь в формулу и проверь ответ.';
           }
           if (q.includes('логик') || q.includes('закономер')) {
-            return 'Логические задачи решаются по шагам: выпиши данные, найди связь, составь формулу или таблицу, проверь ответ. Часто помогает увидеть закономерность, а не просто искать число в лоб.';
+            return 'Логические задачи решаются по шагам: данные, связь, проверка. Не пытайся угадывать — ищи закономерность и строй доказательство.';
           }
-          return 'Математика — это логика и порядок действий. Сначала определим, что известно и что нужно найти, затем выберем формулу, а после этого проверим ответ.';
+          return 'Математика — это дисциплина. Сначала выясни, что известно, что нужно найти, потом выбирай формулу и проверяй отве��.';
         }
 
         if (subject === 'russian') {
           if (q.includes('жи') || q.includes('ши')) {
-            return 'Правило: в словах пишется «жи» и «ши» через букву и: жить, шишка, жизнь. Это важно запомнить, потому что оно часто встречается в диктантах и проверочных работах.';
+            return 'Правило: в словах пишется «жи» и «ши» через букву и: жить, шишка, жизнь. Это правило проверяется и быстро запоминается.';
           }
           if (q.includes('запят') || q.includes('пункт')) {
-            return 'Запятая ставится между частями сложного предложения, а также между однородными членами. Сначала выясняем, есть ли две грамматические основы или несколько однородных элементов. Если есть, ставим запятую.';
+            return 'Запятая ставится между частями сложного предложения и между однородными членами. Сначала ищи грамматическую основу, потом решай, нужен ли знак.';
           }
           if (q.includes('главн') || q.includes('предлож')) {
-            return 'Главные члены предложения — подлежащее и сказуемое. Подлежащее отвечает на вопрос кто? что?, а сказуемое — что делает? что такое? Сначала найди действие и того, кто его выполняет.';
+            return 'Главные члены предложения — подлежащее и сказуемое. Подлежащее отвечает на вопрос кто? что?, а сказуемое — что делает? что такое?' ;
           }
           if (q.includes('синоним') || q.includes('антоним')) {
-            return 'Синонимы — это слова близкие по смыслу, например: красивый — прекрасный. Антонимы — слова с противоположным значением: большой — маленький. Это помогает понимать текст и выразительно говорить.';
+            return 'Синонимы — близкие по смыслу слова, антонимы — противоположные. Слова выбираются по смыслу текста, а не случайно.';
           }
-          return 'В русском языку важно смотреть на смысл, правило и вопрос. Если ответить на вопросы кто? что? что делает? и какой знак нужен, решение становится понятным.';
+          return 'Русский язык — это аккуратность и смысл. Сначала выдели правило, потом применяй его и обязательно проверяй.';
         }
 
         if (subject === 'programming') {
           if (q.includes('if') || q.includes('услов') || q.includes('else')) {
-            return 'Условный оператор if проверяет условие. Если оно истинно, выполняется один блок кода, иначе — другой. Это помогает программе выбирать нужный путь в зависимости от данных.';
+            return 'Условный оператор if проверяет условие. Если оно истинно, выполняется один блок кода, иначе — другой. Подумай, что должно быть соблюдено логически.';
           }
           if (q.includes('for') || q.includes('цикл')) {
-            return 'Цикл for используется, когда нужно повторить одно и то же действие несколько раз. Пример: for i in range(5): print(i) выведет 0, 1, 2, 3, 4. Цикл помогает автоматизировать повторяющиеся операции.';
+            return 'Цикл for нужен, когда действие повторяется несколько раз. Пример: for i in range(5): print(i) выведет 0, 1, 2, 3, 4. Повторение — это не лень, а логика.';
           }
           if (q.includes('функ') || q.includes('def')) {
-            return 'Функция — это блок кода, который можно использовать многократно. Легче писать задачи, если разбить их на небольшие части. Например, def sum(a, b): return a + b.';
+            return 'Функция — это блок кода, который можно использовать много раз. Она нужна для чистоты, повторяемости и упорядоченности программы.';
           }
           if (q.includes('перем') || q.includes('python')) {
-            return 'Переменная хранит данные. Например: x = 10. Потом их можно использовать для вычислений и вывода. Название переменной лучше делать понятным, чтобы код был читаемым.';
+            return 'Переменная хранит данные: x = 10. Потом ты можешь пользоваться этим значением и изменять его. Хороший код — это понятный код.';
           }
-          return 'Программирование — это про логику и последовательность действий. Сначала пойми задачу, затем разбей её на шаги, и только потом переводите в код.';
+          return 'Программирование — это дисциплина и логика. Разбей задачу на шаги, затем напиши код и проверь результат.';
         }
 
-        return 'Я помогу. Напиши тему, задание или вопрос — и я объясню понятно, по шагам и без сложных слов.';
+        return 'Я помогу. Пиши тему, задачу или вопрос, и я объясню строго, но понятно.';
       }
 
       function handleSend() {
@@ -768,10 +790,7 @@
         userInput.value = '';
 
         const response = getReply(currentSubject, question);
-
-        setTimeout(() => {
-          addMessage(response, 'bot');
-        }, 350);
+        setTimeout(() => addMessage(response, 'bot'), 350);
       }
 
       function refreshPage() {
@@ -804,9 +823,7 @@
 
       sendButton.addEventListener('click', handleSend);
       userInput.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          handleSend();
-        }
+        if (event.key === 'Enter') handleSend();
       });
 
       refreshPage();
